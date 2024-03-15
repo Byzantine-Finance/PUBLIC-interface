@@ -7,6 +7,7 @@ import React, {
   MouseEvent as ReactMouseEvent,
   useMemo,
 } from "react";
+import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -14,7 +15,8 @@ import Image from "next/image";
 
 import styles from "./Header.module.scss";
 
-import FavIcon from "../../app/favicon.ico";
+import ByzantineLogo from "@/assets/byzantineLogo.png";
+import SparklesIcon from "@/assets/sparkles.svg";
 
 const Header: React.FC = () => {
   const router = useRouter();
@@ -23,27 +25,39 @@ const Header: React.FC = () => {
   return (
     <header className={styles.header}>
       <Link className={styles.logo} href={"/"}>
-        <Image src={FavIcon} height={40} alt="Logo of the project" />
+        <Image
+          src={ByzantineLogo}
+          height={40}
+          className={styles.logoClariFi}
+          alt="Logo of ClariFi"
+        />
       </Link>
       <div className={styles.menu}>
-        <Link className={styles.itemMenu} href={"/menu-1"}>
-          Menu 1
+        <Link className={styles.itemMenu} href={"/restake"}>
+          Restake
+          {/* <Image
+            src={SparklesIcon}
+            className={styles.logoClariFi}
+            alt="Logo of ClariFi"
+          /> */}
         </Link>
-        <Link className={styles.itemMenu} href={"/menu-2"}>
-          Menu 2
+        <Link className={styles.itemMenu} href={"/validator"}>
+          Validator
         </Link>
-        <Link className={styles.itemMenu} href={"/menu-3"}>
-          Menu 3
+        <Link className={styles.itemMenu} href={"/dashboard"}>
+          Dahsbord
         </Link>
         <a
           className={styles.itemMenu}
-          href="https://twitter.com/"
+          href="https://docs.byzantine.fi/"
           target="_blank"
         >
           Docs
         </a>
       </div>
-      <div className={styles.connect}>Connect</div>
+      <div className={styles.connect}>
+        <DynamicWidget />
+      </div>
     </header>
   );
 };

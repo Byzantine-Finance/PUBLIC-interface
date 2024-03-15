@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useBlockNumber } from "wagmi";
 
+import imageBg from "@/assets/background.png";
+
 export default function Layout({ children }) {
   const { data, isError, isLoading } = useBlockNumber();
 
@@ -17,6 +19,19 @@ export default function Layout({ children }) {
       }}
     >
       {children}
+      {/* <div class="imgBackground">
+        <Image src={imageBg} alt="Logo of ClariFi" />
+      </div> */}
+      {!isLoading && data && (
+        <a
+          class="numberBloc"
+          href={"https://sepolia.etherscan.io/block/" + data.toString()}
+          target="_blank"
+        >
+          <div>{data.toString()}</div>
+          <div></div>
+        </a>
+      )}
     </main>
   );
 }

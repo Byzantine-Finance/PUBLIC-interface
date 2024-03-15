@@ -26,3 +26,13 @@
         }
     }
 }
+
+@media only screen and (max-width: 850px) {
+    .header {
+        .logo {
+            min-width: 47px;
+            width: 47px;
+            overflow: hidden;
+        }
+    }
+}

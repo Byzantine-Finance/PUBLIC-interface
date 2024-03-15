@@ -70,6 +70,35 @@ body {
     }
 }
 
+.numberBloc {
+    color: green;
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    &>*:last-child {
+        width: 12px;
+        height: 12px;
+        background-color: green;
+        border-radius: 16px;
+        animation: bigSmallBigSmall infinite 2s ease-in-out;
+    }
+}
+
+@keyframes bigSmallBigSmall {
+    0%,
+    100% {
+        transform: scale(1)
+    }
+    50% {
+        transform: scale(0.9)
+    }
+}
+
 a {
     text-decoration: none;
     color: inherit;

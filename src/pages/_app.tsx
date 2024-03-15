@@ -2,6 +2,15 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
+import {
+  DynamicContextProvider,
+  DynamicWidget,
+} from "@dynamic-labs/sdk-react-core";
+// import { EthersExtension } from "@dynamic-labs/ethers-v5";
+import { DynamicWagmiConnector } from "@dynamic-labs/wagmi-connector";
+
+import { EthereumWalletConnectors } from "@dynamic-labs/ethereum";
+
 import { createConfig, WagmiProvider } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { http } from "viem";
@@ -32,26 +41,46 @@ const queryClient = new QueryClient();
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Head>
-        <title>Project</title>
-        <meta name="description" content="That's a good project!" key="desc" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, user-scalable=no"
-        />
-        {/* <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@clarifi_it" />
-        <meta
-          name="twitter:title"
-          content="ClariFi, gain clarity in tracking DeFi wallets"
-        />
-        <meta
-          name="twitter:image"
-          content="https://qboizbrjtkumfrvstono.supabase.co/storage/v1/object/public/assets/preview_website.png"
-        /> */}
-      </Head>
-      <Header />
-      <Component {...pageProps} />
+      <DynamicContextProvider
+        theme={"dark"}
+        settings={{
+          environmentId: "4846a3fe-9dce-4455-827e-45b33be09f63",
+          walletConnectors: [EthereumWalletConnectors],
+        }}
+      >
+        <WagmiProvider config={config}>
+          <QueryClientProvider client={queryClient}>
+            <DynamicWagmiConnector>
+              <DynamicPool>
+                <Head>
+                  <title>Byzantine</title>
+                  <meta
+                    name="description"
+                    content="That's a good project!"
+                    key="desc"
+                  />
+                  <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1, user-scalable=no"
+                  />
+                  {/* <meta name="twitter:card" content="summary_large_image" />
+                  <meta name="twitter:site" content="@clarifi_it" />
+                  <meta
+                    name="twitter:title"
+                    content="ClariFi, gain clarity in tracking DeFi wallets"
+                  />
+                  <meta
+                    name="twitter:image"
+                    content="https://qboizbrjtkumfrvstono.supabase.co/storage/v1/object/public/assets/preview_website.png"
+                  /> */}
+                </Head>
+                <Header />
+                <Component {...pageProps} />
+              </DynamicPool>
+            </DynamicWagmiConnector>
+          </QueryClientProvider>
+        </WagmiProvider>
+      </DynamicContextProvider>
     </>
   );
 }

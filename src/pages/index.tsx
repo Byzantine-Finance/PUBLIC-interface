@@ -12,8 +12,8 @@ export default function Home() {
       className={styles.App}
       style={{ height: "100%", display: "flex", alignItems: "center" }}
     >
-      <h1>That's your project mate!!</h1>
-      <h2>Change the src/pages/index</h2>
+      <h1>Restaking, as you like it.</h1>
+      <h2>Build on the most flexible native EigenLayer protocol.</h2>
     </div>
   );
 }
