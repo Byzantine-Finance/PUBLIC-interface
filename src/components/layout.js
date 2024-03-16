@@ -6,7 +6,9 @@ import { useBlockNumber } from "wagmi";
 import imageBg from "@/assets/background.png";
 
 export default function Layout({ children }) {
-  const { data, isError, isLoading } = useBlockNumber();
+  const { data, isError, isLoading } = useBlockNumber({
+    watch: true,
+  });
 
   return (
     <main
@@ -19,9 +21,9 @@ export default function Layout({ children }) {
       }}
     >
       {children}
-      {/* <div class="imgBackground">
+      <div class="imgBackground">
         <Image src={imageBg} alt="Logo of ClariFi" />
-      </div> */}
+      </div>
       {!isLoading && data && (
         <a
           class="numberBloc"

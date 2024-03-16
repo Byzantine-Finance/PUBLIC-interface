@@ -42,7 +42,7 @@ const AVG_RET_BEACON = 0.0356; // 1 ETH = 0.9934 byzETH
 const BidSettings: React.FC = () => {
   const { isConnected, address } = useAccount();
   const { setShowAuthFlow } = useDynamicContext();
-  const chainId = useChainId();
+
   const [inputValue, setInputValue] = useState<string>("0");
 
   const [vestingPeriod, setVestingPeriod] = useState(0);

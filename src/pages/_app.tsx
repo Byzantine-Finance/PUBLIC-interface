@@ -44,7 +44,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <DynamicContextProvider
         theme={"dark"}
         settings={{
-          environmentId: "4846a3fe-9dce-4455-827e-45b33be09f63",
+          environmentId: "26c80771-ae3b-48b8-a4bb-2279429ee83d", //Jonas
+          // environmentId: "4846a3fe-9dce-4455-827e-45b33be09f63", //Benoit
           walletConnectors: [EthereumWalletConnectors],
         }}
       >

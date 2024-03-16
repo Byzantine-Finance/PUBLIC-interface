@@ -16,7 +16,7 @@ import Image from "next/image";
 
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
-import { byzETHabi, byzETHaddress } from "@/ABI/byzETH";
+import { auctionAddress, auctionABI } from "@/ABI/auctionSystem";
 
 import { ethers } from "ethers";
 import { formatEther, parseEther } from "viem";
@@ -53,8 +53,19 @@ const SendBond: React.FC = () => {
     // watch: true,
   });
 
-  function bond1ETH() {
-    console.log("Bond 1 ETH"); //TODO
+  async function bond1ETH() {
+    console.log("Attempting to bond 1 ETH...");
+    try {
+      console.log("Sending the tx: ");
+      const tx = await writeContract({
+        address: auctionAddress,
+        abi: auctionABI,
+        functionName: "joinProtocol",
+        value: parseEther("1"),
+      });
+    } catch (error) {
+      console.error("Transaction failed: ", error);
+    }
   }
 
   // Render
