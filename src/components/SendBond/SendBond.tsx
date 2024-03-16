@@ -8,6 +8,7 @@ import React, {
   useMemo,
 } from "react";
 import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
+import { RATIO } from "@/contexts/ContextProvider";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -34,8 +35,6 @@ import ByzantineLogo from "@/assets/byzantineLogo.png";
 import SparklesIcon from "@/assets/sparkles.svg";
 import SwitchArrows from "@/assets/switchArrows.svg";
 import Ethereum from "@/assets/ethereum.png";
-
-const RATIO = 1; // 1 ETH = 0.9934 byzETH
 
 const SendBond: React.FC = () => {
   const { isConnected, address } = useAccount();

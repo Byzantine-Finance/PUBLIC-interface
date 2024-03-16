@@ -3,7 +3,8 @@
     padding: 42px 16px 16px 16px;
     box-sizing: border-box;
     border-radius: 16px;
-    width: 470px;
+    max-width: 470px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -70,6 +71,10 @@
                     font-size: 32px;
                     width: 100%;
                 }
+                .priceEth {
+                    font-size: 12px;
+                    opacity: 0.5;
+                }
                 .maxBtnBox {
                     font-size: 12px;
                     padding: 4px 10px;
@@ -132,9 +137,16 @@
             width: 100%;
             .resDesc {
                 &.sparkles {
-                    padding: 3px 8px;
+                    padding: 1px 8px;
                     border-radius: 20px;
                     background-color: #721360;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 4px;
+                    img {
+                        width: 14px;
+                    }
                 }
             }
         }

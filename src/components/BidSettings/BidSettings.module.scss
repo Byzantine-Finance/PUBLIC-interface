@@ -1,9 +1,10 @@
 .restakeApp {
     background-color: #70296399;
-    padding: 42px 16px 16px 16px;
+    padding: 16px;
     box-sizing: border-box;
     border-radius: 16px;
-    width: 470px;
+    max-width: 470px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,12 +20,6 @@
         padding: 19px 24px;
         box-sizing: border-box;
         position: relative;
-        .nameBox {
-            font-size: 40px;
-            position: absolute;
-            top: -32px;
-            left: 20px;
-        }
         .contentBox {
             display: flex;
             flex-direction: column;
@@ -38,10 +33,53 @@
                 justify-content: space-between;
                 align-items: center;
                 .firstLeftBox {
-                    font-size: 12px;
+                    font-size: 20px;
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 4px;
+                    .info {
+                        border: 1px solid #BC4DA8;
+                        color: #BC4DA8;
+                        border-radius: 100px;
+                        width: 14px;
+                        height: 14px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 12px;
+                    }
                 }
                 .firstRightBox {
                     font-size: 24px;
+                    display: flex;
+                    gap: 6px;
+                    input {
+                        background-color: inherit;
+                        border: none;
+                        text-align: end;
+                        font-size: 24px;
+                        width: 100px;
+                    }
+                    input[type=number]::-webkit-inner-spin-button,
+                    input[type=number]::-webkit-outer-spin-button {
+                        -webkit-appearance: none;
+                        margin: 0;
+                    }
+                }
+                .bidAmountEth {
+                    display: flex;
+                    flex-direction: column;
+                    &>*:first-child {
+                        font-size: 20px;
+                        display: flex;
+                        gap: 6px;
+                    }
+                    .priceEth {
+                        font-size: 12px;
+                        opacity: 0.5;
+                        text-align: end;
+                    }
                 }
             }
             .secondBox {
@@ -80,11 +118,10 @@
         padding: 12px 0px;
         font-size: 12px;
         .lineDesc {
-            height: 18px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            text-align: end;
             width: 100%;
+            height: 18px;
+            font-size: 14px;
             .resDesc {
                 &.sparkles {
                     padding: 3px 8px;

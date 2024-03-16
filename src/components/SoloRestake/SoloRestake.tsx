@@ -8,6 +8,7 @@ import React, {
   useMemo,
 } from "react";
 import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
+import { ETH_PRICE } from "@/contexts/ContextProvider";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -34,8 +35,6 @@ import ByzantineLogo from "@/assets/byzantineLogo.png";
 import SparklesIcon from "@/assets/sparkles.svg";
 import SwitchArrows from "@/assets/switchArrows.svg";
 import Ethereum from "@/assets/ethereum.png";
-
-const RATIO = 1; // 1 ETH = 0.9934 byzETH
 
 const SoloRestake: React.FC = () => {
   const { isConnected, address } = useAccount();
@@ -135,7 +134,13 @@ const SoloRestake: React.FC = () => {
         <div className={styles.contentBox}>
           <div className={styles.firstBox}>
             <div className={styles.firstLeftBox}>Balance: 32.6106145</div>
-            <div className={styles.firstRightBox}>{inputValue} ETH</div>
+            <div className={styles.firstRightBox}>
+              <div>{inputValue} ETH</div>
+              <div className={styles.priceEth}>
+                {inputValue != "0" &&
+                  "$" + (Number(inputValue) * ETH_PRICE).toFixed(0)}
+              </div>
+            </div>
           </div>
           <div className={styles.secondBox}>
             <input
@@ -154,7 +159,14 @@ const SoloRestake: React.FC = () => {
       <div className={styles.descApp}>
         <div className={styles.lineDesc}>
           <div className={styles.titleDesc}>Reward rate</div>
-          <div className={`${styles.resDesc} ${styles.sparkles}`}>3.9%</div>
+          <div className={`${styles.resDesc} ${styles.sparkles}`}>
+            <Image
+              src={SparklesIcon}
+              className={styles.logoClariFi}
+              alt="Logo of ClariFi"
+            />
+            <div>3.9%</div>
+          </div>
         </div>
         <div className={styles.lineDesc}>
           <div className={styles.titleDesc}>Validator activation</div>

@@ -8,6 +8,7 @@ import React, {
   useMemo,
 } from "react";
 import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
+import { RATIO, ETH_PRICE } from "@/contexts/ContextProvider";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -35,7 +36,8 @@ import SparklesIcon from "@/assets/sparkles.svg";
 import SwitchArrows from "@/assets/switchArrows.svg";
 import Ethereum from "@/assets/ethereum.png";
 
-const RATIO = 1; // 1 ETH = 0.9934 byzETH
+// const RATIO = 1; // 1 ETH = 0.9934 byzETH
+// const ETH_PRICE = 3891.4522521;
 
 const LiquidRestake: React.FC = () => {
   const { isConnected, address } = useAccount();
@@ -142,12 +144,18 @@ const LiquidRestake: React.FC = () => {
         </div>
         <div className={styles.contentBox}>
           <div className={styles.leftBox}>
-            <input
-              type="text"
-              placeholder="0"
-              value={inputValue}
-              onChange={handleChange}
-            />
+            <div>
+              <input
+                type="text"
+                placeholder="0"
+                value={inputValue}
+                onChange={handleChange}
+              />
+              <div className={styles.priceEth}>
+                {inputValue &&
+                  "$" + (Number(inputValue) * ETH_PRICE).toFixed(2)}
+              </div>
+            </div>
             <button className={styles.maxBtnBox} onClick={handleClickOnMax}>
               MAX
             </button>
@@ -191,12 +199,18 @@ const LiquidRestake: React.FC = () => {
         <div className={styles.nameBox}>Receive</div>
         <div className={styles.contentBox}>
           <div className={styles.leftBox}>
-            <input
-              type="text"
-              placeholder="0"
-              value={getConvertedValue()}
-              onChange={handleChange}
-            />
+            <div>
+              <input
+                type="text"
+                placeholder="0"
+                value={getConvertedValue()}
+                onChange={handleChange}
+              />
+              <div className={styles.priceEth}>
+                {inputValue &&
+                  "$" + (Number(inputValue) * ETH_PRICE).toFixed(2)}
+              </div>
+            </div>
             {/* {resBalance} */}
             {/* <button className={styles.maxBtnBox}>MAX</button> */}
           </div>
@@ -228,7 +242,14 @@ const LiquidRestake: React.FC = () => {
       <div className={styles.descApp}>
         <div className={styles.lineDesc}>
           <div className={styles.titleDesc}>Reward rate</div>
-          <div className={`${styles.resDesc} ${styles.sparkles}`}>3.9%</div>
+          <div className={`${styles.resDesc} ${styles.sparkles}`}>
+            <Image
+              src={SparklesIcon}
+              className={styles.logoClariFi}
+              alt="Logo of ClariFi"
+            />
+            <div>3.9%</div>
+          </div>
         </div>
         <div className={styles.lineDesc}>
           <div className={styles.titleDesc}>Exchange rate</div>
