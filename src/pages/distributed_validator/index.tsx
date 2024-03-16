@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAccount } from "wagmi";
 
@@ -31,6 +31,14 @@ export default function Obol() {
     "0xc6e76F72Ea672FAe05C357157CfC37720F0aF26f",
     "0x86B8145c98e5BD25BA722645b15eD65f024a87EC"]);
   const [createClusterPopup, setCreateClusterPopup] = useState<boolean>(false);
+  const [invitationLink, setInvitationLink] = useState<string>("");
+  const [invitationLinkPopup, setInvitationLinkPopup] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (invitationLink!= "") {
+      setInvitationLinkPopup(true);
+    }
+  }, [invitationLink]);
 
   const CURRENT_OPERATORS = operatorsList.length;
 
@@ -104,31 +112,44 @@ export default function Obol() {
       </table>
 
       <div className={styles.sdkIntercation}>
-          <div className={styles.containerRightObol}>
-            <button 
-              className={styles.btnCreateCluster} 
-              onClick={() => {prepareCreateCluster()}}
-            >
-              Create a cluster
-            </button>
-            {createClusterPopup && (
-              <CreateClusterPopup
-                createClusterPopup={createClusterPopup}
-                setCreateClusterPopup={setCreateClusterPopup}
-                operatorsList={operatorsList}
-              />
-            )}
-            {jauge(CURRENT_OPERATORS, OPERATORS_NEEDED)}
-            <button
-              className={styles.btnActivateCluster}
-              onClick={activateCluster}
-              disabled={CURRENT_OPERATORS % OPERATORS_NEEDED == 0 ? false : true}
-              style={{ opacity: CURRENT_OPERATORS / OPERATORS_NEEDED }}
-            >
-              Activate Distributed Validator
-            </button>
-          </div>
+        <div className={styles.containerRightObol}>
+          <button 
+            className={styles.btnCreateCluster} 
+            onClick={() => {prepareCreateCluster()}}
+          >
+            Create a cluster
+          </button>
+          {createClusterPopup && (
+            <CreateClusterPopup
+              createClusterPopup={createClusterPopup}
+              setCreateClusterPopup={setCreateClusterPopup}
+              operatorsList={operatorsList}
+              setInvitationLink={setInvitationLink}
+            />
+          )}
+          {jauge(CURRENT_OPERATORS, OPERATORS_NEEDED)}
+          <button
+            className={styles.btnActivateCluster}
+            onClick={activateCluster}
+            disabled={CURRENT_OPERATORS % OPERATORS_NEEDED == 0 ? false : true}
+            style={{ opacity: CURRENT_OPERATORS / OPERATORS_NEEDED }}
+          >
+            Activate Distributed Validator
+          </button>
         </div>
+      </div>
+      {invitationLinkPopup && (
+        <Popup open={invitationLinkPopup} closeOnDocumentClick={false} position={"top center"} trigger={<div></div>} arrow={false} offsetY={10}>
+          <div>
+            <button className={styles.close} onClick={() => {setInvitationLinkPopup(false)}}>
+                &times;
+            </button>
+            <div className={styles.invitationContent}>
+              Direct the operators to <a href={invitationLink} target="_blank" className={styles.linkColor}>{invitationLink}</a> to complete the key generation process
+            </div>
+          </div>
+        </Popup>
+      )}
     </div>
   );
 }
@@ -138,8 +159,9 @@ export default function Obol() {
 const CreateClusterPopup: React.FC<{
   createClusterPopup: boolean,
   setCreateClusterPopup: React.Dispatch<React.SetStateAction<boolean>>,
-  operatorsList: string[]
-}> = ({ createClusterPopup, setCreateClusterPopup, operatorsList }) => {
+  operatorsList: string[],
+  setInvitationLink: React.Dispatch<React.SetStateAction<string>>
+}> = ({ createClusterPopup, setCreateClusterPopup, operatorsList, setInvitationLink }) => {
 
   async function createCluster(
     operatorsList: string[],
@@ -163,7 +185,9 @@ const CreateClusterPopup: React.FC<{
     };
 
     let configHash = await createObolCluster(clusterConfig);
-    return configHash;
+    console.log("configHash", configHash);
+    const invitationLink = `https://goerli.launchpad.obol.tech/dv?configHash=${configHash}`
+    return invitationLink;
 
   }
 
@@ -175,56 +199,60 @@ const CreateClusterPopup: React.FC<{
   }
 
   return (
-    <Popup  open={createClusterPopup} closeOnDocumentClick={false} position={"top center"} trigger={<div></div>} arrow={false} offsetY={60}>
-        <div>
-            <button className={styles.close} onClick={() => {setCreateClusterPopup(false)}}>
-                &times;
-            </button>
-            <div className={styles.popupContainer}>
-              <div className={styles.header}>Create a Cluster</div>
-              <div className={styles.content}>
-                <p className={styles.mainMessage}>You are about to create a cluster with the following operators:<br/></p>
-                {operatorsList.map((addr, index) => (
-                  <li key={index}>
-                    Op{index}: {addr}
-                  </li>
-                ))}
-                <div className={styles.clusterNameDiv}>
-                  <b>Please choose a cluster name:</b>
-                  <input 
-                      className={styles.clusterNameInput}
-                      type="text" 
-                      spellCheck={false} 
-                      placeholder="cluster_name" 
-                      value={clusterName}
-                      onChange={handleInputChange}>
-                  </input>
+    <>
+      <Popup  open={createClusterPopup} closeOnDocumentClick={false} position={"top center"} trigger={<div></div>} arrow={false} offsetY={60}>
+          <div>
+              <button className={styles.close} onClick={() => {setCreateClusterPopup(false)}}>
+                  &times;
+              </button>
+              <div className={styles.popupContainer}>
+                <div className={styles.header}>Create a Cluster</div>
+                <div className={styles.content}>
+                  <p className={styles.mainMessage}>You are about to create a cluster with the following operators:<br/></p>
+                  {operatorsList.map((addr, index) => (
+                    <li key={index}>
+                      Op{index}: {addr}
+                    </li>
+                  ))}
+                  <div className={styles.clusterNameDiv}>
+                    <b>Please choose a cluster name:</b>
+                    <input 
+                        className={styles.clusterNameInput}
+                        type="text" 
+                        spellCheck={false} 
+                        placeholder="cluster_name" 
+                        value={clusterName}
+                        onChange={handleInputChange}>
+                    </input>
+                  </div>
+                </div>
+                <div className={styles.buttonContainer}>
+                    {!isCreating ? (
+                        <>
+                            <button className={styles.button}
+                                    onClick={async () => {
+                                        const invitationLink = await createCluster(operatorsList, clusterName);
+                                        console.log("invitationLink", invitationLink);
+                                        setInvitationLink(invitationLink);
+                                        setCreateClusterPopup(false);
+                                    }}
+                                    disabled={clusterName == ""}
+                            >
+                                Create
+                            </button>
+                            <button className={styles.button} onClick={() => {setCreateClusterPopup(false)}}>
+                                Cancel
+                            </button>
+                        </>
+                    ) : (
+                        <button className={styles.buttonWhenDeploying}>
+                            Creating...
+                        </button>
+                    )}
                 </div>
               </div>
-              <div className={styles.buttonContainer}>
-                  {!isCreating ? (
-                      <>
-                          <button className={styles.button}
-                                  onClick={async () => {
-                                      let configHash = await createCluster(operatorsList, clusterName);
-                                      console.log("configHash", configHash);
-                                  }}
-                                  disabled={clusterName == ""}
-                          >
-                              Create
-                          </button>
-                          <button className={styles.button} onClick={() => {setCreateClusterPopup(false)}}>
-                              Cancel
-                          </button>
-                      </>
-                  ) : (
-                      <button className={styles.buttonWhenDeploying}>
-                          Deploying...
-                      </button>
-                  )}
-              </div>
-            </div>
-        </div>
-    </Popup>
+          </div>
+      </Popup>
+    </>
   )
 }
