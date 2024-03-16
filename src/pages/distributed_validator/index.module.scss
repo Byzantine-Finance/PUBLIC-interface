@@ -1,0 +1,182 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.joinClusterButtonEnable {
+    background-color: #721360;
+    padding: 8px 16px;
+    width: 10rem;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+.joinClusterButtonEnable:hover {
+    transform: scale(1.08);
+}
+.joinClusterButtonDisable {
+    background-color: #72136193;
+    color: gray;
+    padding: 8px 16px;
+    width: 10rem;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+.tab {
+    margin-top: 3rem;
+    box-shadow:
+        1.2rem 1.2rem 35px 22px var(#72136193);
+    width: 50rem;
+    border-collapse: collapse;
+}
+.caption {
+    padding: 1rem;
+    background-color: #721360;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom: 1px solid grey;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: whitesmoke;
+}
+.head {
+    background-color: #721360;
+    border-bottom: 1px solid grey;
+}
+.opCol {
+    padding: 0.3rem;
+    width: 20%;
+    font-size: 1.1rem;
+}
+.addressCol {
+    padding: 0.3rem;
+    width: 80%;
+    font-size: 1.1rem;
+}
+.opCell {
+    padding: 0.2rem;
+    text-align: center;
+}
+
+.addrCell {
+    padding: 0.2rem;
+    text-align: center;
+}
+
+.tab tbody tr {
+    background-color: #d889cb93;
+    border-bottom: 1px solid grey;
+}
+.tab tbody tr:nth-of-type(even) {
+    background-color: #9d438d93;
+}
+
+.sdkIntercation {
+    margin-top: 4rem;
+    justify-content: center;
+    align-items: center;
+    .containerRightObol {
+        width: 200px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        .btnCreateCluster {
+            background-color: #721360;
+            width: 100%;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: 0.2s;
+            &:hover {
+                // transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+        .btnActivateCluster {
+            background-color: #721360;
+            width: 100%;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+    }
+}
+
+/*.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 20px;
+    gap: 16px;
+    .leftObol,
+    .rightObol {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+    }
+    .leftObol {
+        max-width: 400px;
+        background-color: #70296399;
+        border-radius: 12px;
+        padding: 20px;
+        box-sizing: border-box;
+        .listOperators {
+            display: flex;
+            flex-direction: column;
+            font-variant-numeric: tabular-nums;
+            .lineOperator {
+                display: flex;
+                gap: 4px;
+                &>*:first-child {
+                    min-width: 20px;
+                }
+            }
+        }
+    }
+    .rightObol {
+        justify-content: center;
+        align-items: center;
+        .containerRightObol {
+            width: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            .btnCreateCluster {
+                background-color: #721360;
+                width: 100%;
+                padding: 8px 16px;
+                border-radius: 6px;
+                transition: 0.2s;
+                &:hover {
+                    // transform: scale(1.05);
+                    opacity: 0.8;
+                }
+            }
+            .btnActivateCluster {
+                background-color: #721360;
+                width: 100%;
+                padding: 8px 16px;
+                border-radius: 6px;
+                transition: 0.2s;
+            }
+        }
+    }
+}
+*/
+
+.jauge {
+    width: 200px;
+    height: 5px;
+    background-color: white;
+    border-radius: 2px;
+    display: flex;
+    .level {
+        height: 100%;
+        border-radius: 2px;
+        background-color: #721360;
+    }
+}
