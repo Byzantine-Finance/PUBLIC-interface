@@ -35,6 +35,7 @@ import ByzantineLogo from "@/assets/byzantineLogo.png";
 import SparklesIcon from "@/assets/sparkles.svg";
 import SwitchArrows from "@/assets/switchArrows.svg";
 import Ethereum from "@/assets/ethereum.png";
+import { Tooltip } from "@nextui-org/react";
 
 const SoloRestake: React.FC = () => {
   const { isConnected, address } = useAccount();
@@ -158,7 +159,14 @@ const SoloRestake: React.FC = () => {
       </div>
       <div className={styles.descApp}>
         <div className={styles.lineDesc}>
-          <div className={styles.titleDesc}>Reward rate</div>
+          <div className={styles.titleDesc}>
+            <div>Reward rate</div>
+            <Tooltip
+              content={<div className="tooltip">Blablablablablabla</div>}
+            >
+              <div className={styles.info}>i</div>
+            </Tooltip>
+          </div>
           <div className={`${styles.resDesc} ${styles.sparkles}`}>
             <Image
               src={SparklesIcon}
@@ -169,19 +177,47 @@ const SoloRestake: React.FC = () => {
           </div>
         </div>
         <div className={styles.lineDesc}>
-          <div className={styles.titleDesc}>Validator activation</div>
+          <div className={styles.titleDesc}>
+            <div>Validator activation</div>
+            <Tooltip
+              content={<div className="tooltip">Blablablablablabla</div>}
+            >
+              <div className={styles.info}>i</div>
+            </Tooltip>
+          </div>
           <div className={styles.resDesc}>~0.4 days</div>
         </div>
         <div className={styles.lineDesc}>
-          <div className={styles.titleDesc}>Validator exit</div>
+          <div className={styles.titleDesc}>
+            <div>Validator exit</div>
+            <Tooltip
+              content={<div className="tooltip">Blablablablablabla</div>}
+            >
+              <div className={styles.info}>i</div>
+            </Tooltip>
+          </div>
           <div className={styles.resDesc}>0 to 8 days</div>
         </div>
         <div className={styles.lineDesc}>
-          <div className={styles.titleDesc}>Service fees</div>
+          <div className={styles.titleDesc}>
+            <div>Service fee</div>
+            <Tooltip
+              content={<div className="tooltip">Blablablablablabla</div>}
+            >
+              <div className={styles.info}>i</div>
+            </Tooltip>
+          </div>
           <div className={styles.resDesc}>8%</div>
         </div>
         <div className={styles.lineDesc}>
-          <div className={styles.titleDesc}>Transaction fee</div>
+          <div className={styles.titleDesc}>
+            <div>Transaction fee</div>
+            <Tooltip
+              content={<div className="tooltip">Blablablablablabla</div>}
+            >
+              <div className={styles.info}>i</div>
+            </Tooltip>
+          </div>
           <div className={styles.resDesc}>~ $32</div>
         </div>
       </div>

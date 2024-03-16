@@ -9,6 +9,7 @@ import React, {
 } from "react";
 import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
 import { RATIO, ETH_PRICE } from "@/contexts/ContextProvider";
+import { Tooltip } from "@nextui-org/react";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -241,7 +242,14 @@ const LiquidRestake: React.FC = () => {
       </div>
       <div className={styles.descApp}>
         <div className={styles.lineDesc}>
-          <div className={styles.titleDesc}>Reward rate</div>
+          <div className={styles.titleDesc}>
+            <div>Reward rate</div>
+            <Tooltip
+              content={<div className="tooltip">Blablablablablabla</div>}
+            >
+              <div className={styles.info}>i</div>
+            </Tooltip>
+          </div>
           <div className={`${styles.resDesc} ${styles.sparkles}`}>
             <Image
               src={SparklesIcon}
@@ -252,11 +260,25 @@ const LiquidRestake: React.FC = () => {
           </div>
         </div>
         <div className={styles.lineDesc}>
-          <div className={styles.titleDesc}>Exchange rate</div>
+          <div className={styles.titleDesc}>
+            <div>Exchange rate</div>
+            <Tooltip
+              content={<div className="tooltip">Blablablablablabla</div>}
+            >
+              <div className={styles.info}>i</div>
+            </Tooltip>
+          </div>
           <div className={styles.resDesc}>1 ETH : {RATIO} byzETH</div>
         </div>
         <div className={styles.lineDesc}>
-          <div className={styles.titleDesc}>Transaction fee</div>
+          <div className={styles.titleDesc}>
+            <div>Transaction fee</div>
+            <Tooltip
+              content={<div className="tooltip">Blablablablablabla</div>}
+            >
+              <div className={styles.info}>i</div>
+            </Tooltip>
+          </div>
           <div className={styles.resDesc}>~ $32</div>
         </div>
       </div>

@@ -1,5 +1,55 @@
 .container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 80px 20px;
+    gap: 16px;
+    .dashboard {
+        width: 100%;
+        background-color: #70296399;
+        border-radius: 12px;
+        height: 100%;
+        padding: 19px 24px;
+        box-sizing: border-box;
+        font-size: 14px;
+        .titleTab {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .lineTab {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            gap: 6px;
+            border-bottom: 1px solid #702963;
+            .itemLineTab {
+                width: 100%;
+            }
+            .itemLineTab:not(:first-child) {
+                max-width: 16vw;
+                text-align: center;
+            }
+            &.legend {
+                border-bottom: 2px solid #702963;
+                font-weight: 800;
+            }
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1050px) {
+    .container {
+        .dashboard {
+            .lineTab {
+                .itemLineTab:not(:first-child) {
+                    max-width: 140px;
+                }
+            }
+        }
+    }
 }

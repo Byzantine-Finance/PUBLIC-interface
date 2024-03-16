@@ -64,7 +64,7 @@ const Header: React.FC = () => {
           }`}
           href={"/dashboard"}
         >
-          Dahsbord
+          Dashboard
         </Link>
         <a
           className={styles.itemMenu}

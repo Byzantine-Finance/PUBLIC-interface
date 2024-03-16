@@ -134,17 +134,9 @@ const BidSettings: React.FC = () => {
           <div className={styles.firstBox}>
             <div className={styles.firstLeftBox}>
               <div>Vesting period</div>
-
-              {/* <Tooltip
-                content={
-                  <div className="tooltip">
-                    You will find the date of the transaction, the hash, and a
-                    link to the explorer.
-                  </div>
-                }
-              >
+              <Tooltip content={<div className="tooltip">Blablablablabla</div>}>
                 <div className={styles.info}>i</div>
-              </Tooltip> */}
+              </Tooltip>
             </div>
             <div className={styles.firstRightBox}>
               <input
@@ -173,7 +165,12 @@ const BidSettings: React.FC = () => {
       <div className={styles.boxApp}>
         <div className={styles.contentBox}>
           <div className={styles.firstBox}>
-            <div className={styles.firstLeftBox}>Discount rate</div>
+            <div className={styles.firstLeftBox}>
+              <div>Discount rate</div>
+              <Tooltip content={<div className="tooltip">Blablablablabla</div>}>
+                <div className={styles.info}>i</div>
+              </Tooltip>
+            </div>
             <div className={styles.firstRightBox}>
               <input
                 type="number"
@@ -202,7 +199,12 @@ const BidSettings: React.FC = () => {
       <div className={styles.boxApp}>
         <div className={styles.contentBox}>
           <div className={styles.firstBox}>
-            <div className={styles.firstLeftBox}>Bid amount</div>
+            <div className={styles.firstLeftBox}>
+              <div>Bid amount</div>
+              <Tooltip content={<div className="tooltip">Blablablablabla</div>}>
+                <div className={styles.info}>i</div>
+              </Tooltip>
+            </div>
             <div className={styles.bidAmountEth}>
               <div>
                 <div>{bidAmountPrice.toFixed(5)}</div>
