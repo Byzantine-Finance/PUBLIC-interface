@@ -103,70 +103,89 @@
         }
     }
 }
-
-/*.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 80px 20px;
-    gap: 16px;
-    .leftObol,
-    .rightObol {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-content: center;
-    }
-    .leftObol {
-        max-width: 400px;
-        background-color: #70296399;
-        border-radius: 12px;
-        padding: 20px;
-        box-sizing: border-box;
-        .listOperators {
-            display: flex;
-            flex-direction: column;
-            font-variant-numeric: tabular-nums;
-            .lineOperator {
-                display: flex;
-                gap: 4px;
-                &>*:first-child {
-                    min-width: 20px;
-                }
-            }
-        }
-    }
-    .rightObol {
-        justify-content: center;
-        align-items: center;
-        .containerRightObol {
-            width: 200px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            .btnCreateCluster {
-                background-color: #721360;
-                width: 100%;
-                padding: 8px 16px;
-                border-radius: 6px;
-                transition: 0.2s;
-                &:hover {
-                    // transform: scale(1.05);
-                    opacity: 0.8;
-                }
-            }
-            .btnActivateCluster {
-                background-color: #721360;
-                width: 100%;
-                padding: 8px 16px;
-                border-radius: 6px;
-                transition: 0.2s;
-            }
-        }
-    }
+.popupContainer {
+    background-color: black;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 40rem;
+    border-radius: 10px;
+    border: solid 1px rgb(76, 75, 75);
+    background-color: #3d0634;
 }
-*/
+.close {
+    cursor: pointer;
+    outline: none;
+    color: red;
+    position: absolute;
+    display: block;
+    padding: 2px 5px;
+    line-height: 20px;
+    right: -10px;
+    top: -10px;
+    font-size: 24px;
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #cfcece;
+}
+.header {
+    border-bottom: 1px solid gray;
+    font-size: 1.9rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 0.7rem;
+    background-color: #5c1b51;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+.content {
+    text-align: center;
+    font-size: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+}
+.clusterNameDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+.buttonContainer {
+    width: 100%;
+    padding-top: 0.5rem;
+    padding-bottom:  1rem;
+    text-align: center;
+}
+
+.button {
+    margin-right: 2rem;
+    margin-left: 2rem;
+    padding: 0.2rem 2.5rem 0.2rem 2.5rem;
+    width: 15rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border: 1.5px solid grey;
+    border-radius: 5px;
+}
+.button:hover {
+    background-color: #631f58;
+}
+.clusterNameInput {
+    outline: none;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 0.6rem;
+    width: 45%;
+    background-color: transparent;
+    padding: 0.5rem 0.4rem;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+.clusterNameInput::placeholder {
+    color: rgba(128, 128, 128, 0.51);
+}
 
 .jauge {
     width: 200px;
@@ -179,4 +198,17 @@
         border-radius: 2px;
         background-color: #721360;
     }
+}
+
+.invitationContent {
+    width: 60rem;
+    text-align: center;
+    border-radius: 10px;
+    background-color: white;
+    padding: 0.5rem;
+    color: black;
+}
+
+.linkColor {
+    color: orange;
 }
