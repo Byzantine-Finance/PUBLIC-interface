@@ -7,7 +7,7 @@ import Popup from "reactjs-popup";
 
 import styles from "./index.module.scss";
 
-import { createObolCluster } from "./obol-sdk";
+import { createObolCluster } from "../../sdk/obol-sdk";
 
 const OPERATORS_NEEDED = 4;
 const FEE_RECIPIENT_ADDRESS = "0x3CD4958e76C317abcEA19faDd076348808424F99";
