@@ -11,6 +11,8 @@ import SoloRestake from "@/components/SoloRestake/SoloRestake";
 
 import styles from "./index.module.scss";
 
+import { createObolCluster } from "./obol-sdk";
+
 const OPERATORS_NEEDED = 4;
 
 //var operatorsList: string[] = [
@@ -23,6 +25,7 @@ const OPERATORS_NEEDED = 4;
 export default function Obol() {
 
   const { isConnected, address } = useAccount();
+  console.log("address", address);
 
   const [operatorsList, setOperatorsList] = useState<string[]>([]);
 
@@ -95,7 +98,18 @@ export default function Obol() {
 
       <div className={styles.sdkIntercation}>
           <div className={styles.containerRightObol}>
-            <button className={styles.btnCreateCluster} onClick={createCluster}>
+            <button 
+              className={styles.btnCreateCluster} 
+              onClick={async () => {
+                await createObolCluster();
+                //if (operatorsList.length < OPERATORS_NEEDED) {
+                //  alert("You need at least 4 operators to create a cluster");
+                //} else {
+                //  //createCluster();
+                //  let res = await createObolCluster();
+                //}
+              }}
+            >
               Create a cluster
             </button>
             {jauge(CURRENT_OPERATORS, OPERATORS_NEEDED)}
