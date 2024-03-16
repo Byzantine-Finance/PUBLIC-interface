@@ -1,19 +1,17 @@
 "use client";
-import Link from "next/link";
-import Image from "next/image";
-import React, { use, useEffect, useState } from "react";
+import React, { useState, ChangeEvent } from "react";
 import { useRouter } from "next/router";
-import { useAccount, useBalance, useChainId, useEnsName } from "wagmi";
+import { useAccount } from "wagmi";
 
-import LiquidSoloSwitch from "@/components/LiquidSoloSwitch/LiquidSoloSwitch";
-import LiquidRestake from "@/components/LiquidRestake/LiquidRestake";
-import SoloRestake from "@/components/SoloRestake/SoloRestake";
+import Popup from 'reactjs-popup';
 
 import styles from "./index.module.scss";
 
 import { createObolCluster } from "./obol-sdk";
 
 const OPERATORS_NEEDED = 4;
+const FEE_RECIPIENT_ADDRESS = "0x3CD4958e76C317abcEA19faDd076348808424F99";
+const WITHDRAWAL_ADDRESS = "0x3CD4958e76C317abcEA19faDd076348808424F99";
 
 //var operatorsList: string[] = [
 //  "0xdBE04587196De40ADF4f6ec60F62C4065014628f",
@@ -27,10 +25,14 @@ export default function Obol() {
   const { isConnected, address } = useAccount();
   console.log("address", address);
 
-  const [operatorsList, setOperatorsList] = useState<string[]>([]);
+  const [operatorsList, setOperatorsList] = useState<string[]>([
+    "0xC35CfCd67b9C27345a54EDEcC1033F2284148c81",
+    "0x33807D6F1DCe44b9C599fFE03640762A6F08C496",
+    "0xc6e76F72Ea672FAe05C357157CfC37720F0aF26f",
+    "0x86B8145c98e5BD25BA722645b15eD65f024a87EC"]);
+  const [createClusterPopup, setCreateClusterPopup] = useState<boolean>(false);
 
-  // +1 because of the hard coded operator
-  const CURRENT_OPERATORS = operatorsList.length + 1;
+  const CURRENT_OPERATORS = operatorsList.length;
 
   function joinCluster(address: string) {
     if (!operatorsList.includes(address)) {
@@ -40,9 +42,18 @@ export default function Obol() {
     }
   }
 
-  function createCluster() {
-    console.log("todo create cluster");
+  function prepareCreateCluster() {
+    if (isConnected) {
+      if (operatorsList.length < OPERATORS_NEEDED) {
+        alert("You need at least 4 operators to create a cluster");
+      } else {
+        setCreateClusterPopup(true);
+      }
+    } else {
+      alert("Connect your wallet to create a cluster");
+    }
   }
+
   function activateCluster() {
     console.log("todo create cluster");
   }
@@ -82,14 +93,10 @@ export default function Obol() {
         </tr>
         
         <tbody>
-          <tr key={0}>
-            <td className={styles.opCell}>Op0</td>
-            <td className={styles.addrCell}>0xdBE04587196De40ADF4f6ec60F62C4065014628f</td>
-          </tr>
-
+          
           {operatorsList.map((addr, index) => (
-            <tr key={index + 1}>
-              <td className={styles.opCell}>{`Op${index+1}`}</td>
+            <tr key={index}>
+              <td className={styles.opCell}>{`Op${index}`}</td>
               <td className={styles.addrCell}>{addr}</td>
             </tr>
           ))}
@@ -100,18 +107,17 @@ export default function Obol() {
           <div className={styles.containerRightObol}>
             <button 
               className={styles.btnCreateCluster} 
-              onClick={async () => {
-                await createObolCluster();
-                //if (operatorsList.length < OPERATORS_NEEDED) {
-                //  alert("You need at least 4 operators to create a cluster");
-                //} else {
-                //  //createCluster();
-                //  let res = await createObolCluster();
-                //}
-              }}
+              onClick={() => {prepareCreateCluster()}}
             >
               Create a cluster
             </button>
+            {createClusterPopup && (
+              <CreateClusterPopup
+                createClusterPopup={createClusterPopup}
+                setCreateClusterPopup={setCreateClusterPopup}
+                operatorsList={operatorsList}
+              />
+            )}
             {jauge(CURRENT_OPERATORS, OPERATORS_NEEDED)}
             <button
               className={styles.btnActivateCluster}
@@ -125,4 +131,100 @@ export default function Obol() {
         </div>
     </div>
   );
+}
+
+
+
+const CreateClusterPopup: React.FC<{
+  createClusterPopup: boolean,
+  setCreateClusterPopup: React.Dispatch<React.SetStateAction<boolean>>,
+  operatorsList: string[]
+}> = ({ createClusterPopup, setCreateClusterPopup, operatorsList }) => {
+
+  async function createCluster(
+    operatorsList: string[],
+    clusterName: string
+  ) {
+
+    const clusterConfig = {
+      name: clusterName,
+      operators: [
+        { address: operatorsList[0] },
+        { address: operatorsList[1] },
+        { address: operatorsList[2] },
+        { address: operatorsList[3] },
+      ],
+      validators: [
+        {
+          fee_recipient_address: FEE_RECIPIENT_ADDRESS,
+          withdrawal_address: WITHDRAWAL_ADDRESS,
+        },
+      ],
+    };
+
+    let configHash = await createObolCluster(clusterConfig);
+    return configHash;
+
+  }
+
+  const [clusterName, setClusterName] = useState<string>("");
+  const [isCreating, setIsCreating] = useState<boolean>(false);
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setClusterName(e.target.value);
+  }
+
+  return (
+    <Popup  open={createClusterPopup} closeOnDocumentClick={false} position={"top center"} trigger={<div></div>} arrow={false} offsetY={60}>
+        <div>
+            <button className={styles.close} onClick={() => {setCreateClusterPopup(false)}}>
+                &times;
+            </button>
+            <div className={styles.popupContainer}>
+              <div className={styles.header}>Create a Cluster</div>
+              <div className={styles.content}>
+                <p className={styles.mainMessage}>You are about to create a cluster with the following operators:<br/></p>
+                {operatorsList.map((addr, index) => (
+                  <li key={index}>
+                    Op{index}: {addr}
+                  </li>
+                ))}
+                <div className={styles.clusterNameDiv}>
+                  <b>Please choose a cluster name:</b>
+                  <input 
+                      className={styles.clusterNameInput}
+                      type="text" 
+                      spellCheck={false} 
+                      placeholder="cluster_name" 
+                      value={clusterName}
+                      onChange={handleInputChange}>
+                  </input>
+                </div>
+              </div>
+              <div className={styles.buttonContainer}>
+                  {!isCreating ? (
+                      <>
+                          <button className={styles.button}
+                                  onClick={async () => {
+                                      let configHash = await createCluster(operatorsList, clusterName);
+                                      console.log("configHash", configHash);
+                                  }}
+                                  disabled={clusterName == ""}
+                          >
+                              Create
+                          </button>
+                          <button className={styles.button} onClick={() => {setCreateClusterPopup(false)}}>
+                              Cancel
+                          </button>
+                      </>
+                  ) : (
+                      <button className={styles.buttonWhenDeploying}>
+                          Deploying...
+                      </button>
+                  )}
+              </div>
+            </div>
+        </div>
+    </Popup>
+  )
 }
