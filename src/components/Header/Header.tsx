@@ -21,6 +21,10 @@ import SparklesIcon from "@/assets/sparkles.svg";
 const Header: React.FC = () => {
   const router = useRouter();
 
+  const isActive = (path: string) => {
+    return router.pathname === path;
+  };
+
   // Render
   return (
     <header className={styles.header}>
@@ -33,18 +37,33 @@ const Header: React.FC = () => {
         />
       </Link>
       <div className={styles.menu}>
-        <Link className={styles.itemMenu} href={"/restake"}>
+        <Link
+          className={`${styles.itemMenu} ${
+            isActive("/restake") ? styles.current : ""
+          }`}
+          href={"/restake"}
+        >
           Restake
-          {/* <Image
+          <Image
             src={SparklesIcon}
             className={styles.logoClariFi}
             alt="Logo of ClariFi"
-          /> */}
+          />
         </Link>
-        <Link className={styles.itemMenu} href={"/validator"}>
+        <Link
+          className={`${styles.itemMenu} ${
+            isActive("/validator") ? styles.current : ""
+          }`}
+          href={"/validator"}
+        >
           Validator
         </Link>
-        <Link className={styles.itemMenu} href={"/dashboard"}>
+        <Link
+          className={`${styles.itemMenu} ${
+            isActive("/dashboard") ? styles.current : ""
+          }`}
+          href={"/dashboard"}
+        >
           Dahsbord
         </Link>
         <a

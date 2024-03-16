@@ -1,0 +1,37 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 20px;
+    gap: 16px;
+    .explainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 30px 80px;
+        gap: 10px;
+        background-color: #70296399;
+        border-radius: 12px;
+        .titleExplainer {
+            font-size: 36px;
+            font-weight: 800;
+        }
+        .leanrMoreExplainer {
+            text-decoration: underline;
+            opacity: 0.5;
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 850px) {
+    .container {
+        .explainer {
+            padding: 30px;
+        }
+    }
+}

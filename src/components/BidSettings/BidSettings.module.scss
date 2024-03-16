@@ -1,0 +1,115 @@
+.restakeApp {
+    background-color: #70296399;
+    padding: 42px 16px 16px 16px;
+    box-sizing: border-box;
+    border-radius: 16px;
+    width: 470px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    .boxApp {
+        width: 100%;
+        background-color: #70296399;
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 19px 24px;
+        box-sizing: border-box;
+        position: relative;
+        .nameBox {
+            font-size: 40px;
+            position: absolute;
+            top: -32px;
+            left: 20px;
+        }
+        .contentBox {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            .firstBox {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .firstLeftBox {
+                    font-size: 12px;
+                }
+                .firstRightBox {
+                    font-size: 24px;
+                }
+            }
+            .secondBox {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .slider {
+                    width: 100%;
+                    border: inherit;
+                }
+                .slider::-webkit-slider-thumb {
+                    -webkit-appearance: none;
+                    appearance: none;
+                    width: 25px;
+                    height: 25px;
+                    background: #04AA6D;
+                    cursor: pointer;
+                }
+                .slider::-moz-range-thumb {
+                    width: 25px;
+                    height: 25px;
+                    background: #04AA6D;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    .descApp {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        padding: 12px 0px;
+        font-size: 12px;
+        .lineDesc {
+            height: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            .resDesc {
+                &.sparkles {
+                    padding: 3px 8px;
+                    border-radius: 20px;
+                    background-color: #721360;
+                }
+            }
+        }
+    }
+    .connectBtn {
+        border-radius: 100px;
+        width: 100%;
+        padding: 8px 32px;
+        box-sizing: border-box;
+        font-size: 32px;
+        background-color: #721360;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:hover {
+            opacity: 0.8;
+        }
+        &.insert {
+            cursor: inherit;
+            opacity: 0.5;
+        }
+    }
+}
