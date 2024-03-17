@@ -1,13 +1,8 @@
-const auctionAddress = "0x10a50c363FE4e8c17196B889Caf9047408C78C2e"; //sepolia
+const auctionAddress = "0x0EB1b6E08820A80C85D9b993B32Cb38Ad350Bd3b"; //sepolia
 const auctionABI = [{
         "inputs": [],
         "stateMutability": "nonpayable",
         "type": "constructor"
-    },
-    {
-        "inputs": [],
-        "name": "BadPermissions",
-        "type": "error"
     },
     {
         "anonymous": false,
@@ -71,24 +66,10 @@ const auctionABI = [{
         "type": "event"
     },
     {
-        "inputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
-        "name": "auctionSet",
-        "outputs": [{
-                "internalType": "address",
-                "name": "operator",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "auctionScore",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
+        "inputs": [],
+        "name": "DEBUG_becomeOperator",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -114,58 +95,23 @@ const auctionABI = [{
         "type": "function"
     },
     {
-        "inputs": [{
-            "internalType": "address",
-            "name": "operator",
-            "type": "address"
-        }],
-        "name": "getOperatorDetails",
+        "inputs": [],
+        "name": "getAuctionSet",
         "outputs": [{
             "components": [{
-                    "internalType": "enum AuctionContract.OperatorStatus",
-                    "name": "opStat",
-                    "type": "uint8"
-                },
-                {
-                    "components": [{
-                            "internalType": "uint128",
-                            "name": "durationInDays",
-                            "type": "uint128"
-                        },
-                        {
-                            "internalType": "uint256",
-                            "name": "dailyVcPrice",
-                            "type": "uint256"
-                        },
-                        {
-                            "internalType": "uint8",
-                            "name": "clusterSize",
-                            "type": "uint8"
-                        },
-                        {
-                            "internalType": "uint256",
-                            "name": "auctionScore",
-                            "type": "uint256"
-                        }
-                    ],
-                    "internalType": "struct AuctionContract.Bid",
-                    "name": "bid",
-                    "type": "tuple"
-                },
-                {
                     "internalType": "address",
-                    "name": "assignedToStrategyModule",
+                    "name": "operator",
                     "type": "address"
                 },
                 {
                     "internalType": "uint256",
-                    "name": "lastDvtKick",
+                    "name": "auctionScore",
                     "type": "uint256"
                 }
             ],
-            "internalType": "struct AuctionContract.OperatorDetails",
+            "internalType": "struct AuctionContract.AuctionSetMember[]",
             "name": "",
-            "type": "tuple"
+            "type": "tuple[]"
         }],
         "stateMutability": "view",
         "type": "function"
@@ -218,9 +164,9 @@ const auctionABI = [{
         "inputs": [],
         "name": "maxDiscountRate",
         "outputs": [{
-            "internalType": "uint8",
+            "internalType": "uint256",
             "name": "",
-            "type": "uint8"
+            "type": "uint256"
         }],
         "stateMutability": "view",
         "type": "function"
@@ -229,9 +175,20 @@ const auctionABI = [{
         "inputs": [],
         "name": "minDuration",
         "outputs": [{
-            "internalType": "uint8",
+            "internalType": "uint256",
             "name": "",
-            "type": "uint8"
+            "type": "uint256"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "operatorBond",
+        "outputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
         }],
         "stateMutability": "view",
         "type": "function"
@@ -312,6 +269,17 @@ const auctionABI = [{
     },
     {
         "inputs": [{
+            "internalType": "address[]",
+            "name": "operators",
+            "type": "address[]"
+        }],
+        "name": "releaseOperators",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
             "internalType": "uint256",
             "name": "numberOfOps",
             "type": "uint256"
@@ -345,7 +313,7 @@ const auctionABI = [{
     {
         "inputs": [{
             "internalType": "uint256",
-            "name": "aprPercentageTimesAThousand",
+            "name": "aprUpscaledPercentage",
             "type": "uint256"
         }],
         "name": "updateExpectedReturn",
@@ -355,9 +323,9 @@ const auctionABI = [{
     },
     {
         "inputs": [{
-            "internalType": "uint8",
+            "internalType": "uint256",
             "name": "newMaxDiscount",
-            "type": "uint8"
+            "type": "uint256"
         }],
         "name": "updateMaxDiscount",
         "outputs": [],
@@ -371,6 +339,17 @@ const auctionABI = [{
             "type": "uint8"
         }],
         "name": "updateMinDuration",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "newOperatorBond",
+            "type": "uint256"
+        }],
+        "name": "updateOperatorBond",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"

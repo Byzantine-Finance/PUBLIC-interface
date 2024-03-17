@@ -8,7 +8,7 @@ import React, {
   useMemo,
 } from "react";
 import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
-import { ETH_PRICE } from "@/contexts/ContextProvider";
+import { ETH_PRICE, useUser } from "@/contexts/ContextProvider";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -41,6 +41,8 @@ const SoloRestake: React.FC = () => {
   const { isConnected, address } = useAccount();
   const { setShowAuthFlow } = useDynamicContext();
   const chainId = useChainId();
+  const { showAnimation } = useUser();
+
   const [restaking, setRestaking] = useState<boolean>(true);
   const [inputValue, setInputValue] = useState<string>("0");
   const [contractBalanceKey, setContractBalanceKey] = useState(0);
@@ -162,7 +164,11 @@ const SoloRestake: React.FC = () => {
           <div className={styles.titleDesc}>
             <div>Reward rate</div>
             <Tooltip
-              content={<div className="tooltip">Blablablablablabla</div>}
+              content={
+                <div className="tooltip">
+                  Average protocol reward rate over the past 30 days
+                </div>
+              }
             >
               <div className={styles.info}>i</div>
             </Tooltip>
@@ -180,14 +186,18 @@ const SoloRestake: React.FC = () => {
           <div className={styles.titleDesc}>
             <div>Validator activation</div>
             <Tooltip
-              content={<div className="tooltip">Blablablablablabla</div>}
+              content={
+                <div className="tooltip">
+                  Predicted time until your validator starts generating rewards
+                </div>
+              }
             >
               <div className={styles.info}>i</div>
             </Tooltip>
           </div>
           <div className={styles.resDesc}>~0.4 days</div>
         </div>
-        <div className={styles.lineDesc}>
+        {/* <div className={styles.lineDesc}>
           <div className={styles.titleDesc}>
             <div>Validator exit</div>
             <Tooltip
@@ -197,26 +207,26 @@ const SoloRestake: React.FC = () => {
             </Tooltip>
           </div>
           <div className={styles.resDesc}>0 to 8 days</div>
-        </div>
+        </div> */}
         <div className={styles.lineDesc}>
           <div className={styles.titleDesc}>
             <div>Service fee</div>
             <Tooltip
-              content={<div className="tooltip">Blablablablablabla</div>}
+              content={
+                <div className="tooltip">
+                  The fees the protocol takes. For us, that's 0%. Yes, we added
+                  this just to brag about it.
+                </div>
+              }
             >
               <div className={styles.info}>i</div>
             </Tooltip>
           </div>
-          <div className={styles.resDesc}>8%</div>
+          <div className={styles.resDesc}>0%</div>
         </div>
         <div className={styles.lineDesc}>
           <div className={styles.titleDesc}>
-            <div>Transaction fee</div>
-            <Tooltip
-              content={<div className="tooltip">Blablablablablabla</div>}
-            >
-              <div className={styles.info}>i</div>
-            </Tooltip>
+            <div>Gas fee</div>
           </div>
           <div className={styles.resDesc}>~ $32</div>
         </div>
@@ -224,7 +234,10 @@ const SoloRestake: React.FC = () => {
       <>
         {!isConnected ? (
           <button
-            className={styles.connectBtn}
+            className={`${styles.connectBtn} ${
+              showAnimation && "shakeAnimation"
+            }`}
+            id="invincible"
             onClick={() => setShowAuthFlow(true)}
           >
             Connect

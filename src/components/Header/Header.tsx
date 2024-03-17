@@ -17,9 +17,11 @@ import styles from "./Header.module.scss";
 
 import ByzantineLogo from "@/assets/byzantineLogo.png";
 import SparklesIcon from "@/assets/sparkles.svg";
+import { useUser } from "@/contexts/ContextProvider";
 
 const Header: React.FC = () => {
   const router = useRouter();
+  const { showAnimation } = useUser();
 
   const isActive = (path: string) => {
     return router.pathname === path;
@@ -39,9 +41,9 @@ const Header: React.FC = () => {
       <div className={styles.menu}>
         <Link
           className={`${styles.itemMenu} ${
-            isActive("/restake") ? styles.current : ""
+            isActive("/") ? styles.current : ""
           }`}
-          href={"/restake"}
+          href={"/"}
         >
           Restake
           <Image
@@ -74,7 +76,10 @@ const Header: React.FC = () => {
           Docs
         </a>
       </div>
-      <div className={styles.connect}>
+      <div
+        className={`${styles.connect} ${showAnimation && "shakeAnimation"}`}
+        id="invincible"
+      >
         <DynamicWidget />
       </div>
     </header>
