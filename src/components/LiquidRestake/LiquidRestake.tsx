@@ -10,6 +10,8 @@ import React, {
 import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
 import { RATIO, ETH_PRICE } from "@/contexts/ContextProvider";
 import { Tooltip } from "@nextui-org/react";
+import { toast } from "react-toastify";
+import { useUser } from "@/contexts/ContextProvider";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -47,6 +49,7 @@ const LiquidRestake: React.FC = () => {
   const [restaking, setRestaking] = useState<boolean>(true);
   const [inputValue, setInputValue] = useState<string>("");
   const [contractBalanceKey, setContractBalanceKey] = useState(0);
+  const { showAnimation } = useUser();
 
   const { data: hash, isPending, error, writeContract } = useWriteContract();
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
@@ -75,6 +78,36 @@ const LiquidRestake: React.FC = () => {
     console.log("contractBalance");
     console.log(contractBalance);
   }, [contractBalance]);
+  useEffect(() => {
+    if (error) {
+      console.log(error);
+      toast.error(
+        <div>
+          Transaction failed:{" "}
+          {(error as BaseError).shortMessage || error.message}
+        </div>,
+        { autoClose: 4000 }
+      );
+    }
+  }, [error]);
+  useEffect(() => {
+    if (isConfirmed && address) {
+      console.log(isConfirmed);
+      console.log(address);
+      toast.success(
+        <div className="confirmedTransaction">
+          Transaction confirmed!
+          <a
+            href={`https://sepolia.etherscan.io/tx/${hash}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View on Etherscan
+          </a>
+        </div>
+      );
+    }
+  }, [isConfirmed]);
 
   //   console.log(resBalance);
 
@@ -245,7 +278,11 @@ const LiquidRestake: React.FC = () => {
           <div className={styles.titleDesc}>
             <div>Reward rate</div>
             <Tooltip
-              content={<div className="tooltip">Blablablablablabla</div>}
+              content={
+                <div className="tooltip">
+                  Average protocol reward rate over the past 30 days
+                </div>
+              }
             >
               <div className={styles.info}>i</div>
             </Tooltip>
@@ -263,7 +300,12 @@ const LiquidRestake: React.FC = () => {
           <div className={styles.titleDesc}>
             <div>Exchange rate</div>
             <Tooltip
-              content={<div className="tooltip">Blablablablablabla</div>}
+              content={
+                <div className="tooltip">
+                  The current exchange rate of byzETH. This ratio will increase
+                  over time, representing the revenue.
+                </div>
+              }
             >
               <div className={styles.info}>i</div>
             </Tooltip>
@@ -272,12 +314,7 @@ const LiquidRestake: React.FC = () => {
         </div>
         <div className={styles.lineDesc}>
           <div className={styles.titleDesc}>
-            <div>Transaction fee</div>
-            <Tooltip
-              content={<div className="tooltip">Blablablablablabla</div>}
-            >
-              <div className={styles.info}>i</div>
-            </Tooltip>
+            <div>Gas fee</div>
           </div>
           <div className={styles.resDesc}>~ $32</div>
         </div>
@@ -285,8 +322,14 @@ const LiquidRestake: React.FC = () => {
       <>
         {!isConnected ? (
           <button
-            className={styles.connectBtn}
+            // className={styles.connectBtn}
+            className={`${styles.connectBtn} ${
+              showAnimation && "shakeAnimation"
+            }`}
+            id="invincible"
             onClick={() => setShowAuthFlow(true)}
+            // onClick={() => toast( "Oups, you need to connect first!")}
+            // onClick={() => toast( "Oups, you need to connect first!")}
           >
             Connect
           </button>
@@ -312,12 +355,9 @@ const LiquidRestake: React.FC = () => {
             Insert an amount
           </button>
         )}
-        {hash && <div>Transaction Hash: {hash}</div>}
+        {/* {hash && <div>Transaction Hash: {hash}</div>}
         {isConfirming && <div>Waiting for confirmation...</div>}
-        {isConfirmed && <div>Transaction confirmed.</div>}
-        {error && (
-          <div>Error: {(error as BaseError).shortMessage || error.message}</div>
-        )}
+        {isConfirmed && <div>Transaction confirmed.</div>} */}
       </>
     </div>
   );

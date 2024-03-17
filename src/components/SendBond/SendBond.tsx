@@ -8,7 +8,8 @@ import React, {
   useMemo,
 } from "react";
 import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
-import { RATIO } from "@/contexts/ContextProvider";
+import { RATIO, useUser } from "@/contexts/ContextProvider";
+import { toast } from "react-toastify";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -39,8 +40,15 @@ import Ethereum from "@/assets/ethereum.png";
 const SendBond: React.FC = () => {
   const { isConnected, address } = useAccount();
   const { setShowAuthFlow } = useDynamicContext();
+  const { showAnimation } = useUser();
+
   const chainId = useChainId();
   const [restaking, setRestaking] = useState<boolean>(true);
+  const { data: bondAmount } = useReadContract({
+    address: auctionAddress,
+    abi: auctionABI,
+    functionName: "operatorBond",
+  });
 
   const { data: hash, isPending, error, writeContract } = useWriteContract();
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
@@ -52,6 +60,40 @@ const SendBond: React.FC = () => {
     address: address,
     // watch: true,
   });
+  useEffect(() => {
+    console.log("bondAmount");
+    console.log(bondAmount);
+  }, [bondAmount]);
+  useEffect(() => {
+    if (error) {
+      console.log(error);
+      toast.error(
+        <div>
+          Transaction failed:{" "}
+          {(error as BaseError).shortMessage || error.message}
+        </div>,
+        { autoClose: 4000 }
+      );
+    }
+  }, [error]);
+  useEffect(() => {
+    if (isConfirmed && address) {
+      console.log(isConfirmed);
+      console.log(address);
+      toast.success(
+        <div className="confirmedTransaction">
+          Transaction confirmed!
+          <a
+            href={`https://sepolia.etherscan.io/tx/${hash}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View on Etherscan
+          </a>
+        </div>
+      );
+    }
+  }, [isConfirmed]);
 
   async function bond1ETH() {
     console.log("Attempting to bond 1 ETH...");
@@ -61,7 +103,7 @@ const SendBond: React.FC = () => {
         address: auctionAddress,
         abi: auctionABI,
         functionName: "joinProtocol",
-        value: parseEther("1"),
+        value: bondAmount as bigint,
       });
     } catch (error) {
       console.error("Transaction failed: ", error);
@@ -76,7 +118,9 @@ const SendBond: React.FC = () => {
           {restaking ? "Restake" : "Withdraw"}
         </div> */}
         <div className={styles.contentBox}>
-          <div className={styles.leftBox}>1</div>
+          <div className={styles.leftBox}>
+            {bondAmount ? formatEther(bondAmount as bigint) : "..."}
+          </div>
           <div className={styles.rightBox}>
             <div className={styles.firstLineRightBox}>
               <div className={styles.imgToken}>
@@ -87,9 +131,7 @@ const SendBond: React.FC = () => {
                   alt="Button to switch assets from ETH and byzETH"
                 />
               </div>
-              <div className={styles.nameToken}>
-                {restaking ? "ETH" : "byzETH"}
-              </div>
+              <div className={styles.nameToken}>ETH</div>
             </div>
             <div className={styles.balance}>
               Balance: {isConnected ? balanceETH?.formatted.slice(0, 8) : "..."}
@@ -100,7 +142,10 @@ const SendBond: React.FC = () => {
       <>
         {!isConnected ? (
           <button
-            className={styles.connectBtn}
+            className={`${styles.connectBtn} ${
+              showAnimation && "shakeAnimation"
+            }`}
+            id="invincible"
             onClick={() => setShowAuthFlow(true)}
           >
             Connect
@@ -111,15 +156,15 @@ const SendBond: React.FC = () => {
           </button>
         ) : (
           <button className={styles.connectBtn} onClick={bond1ETH}>
-            Bond 1 ETH
+            Deposit
           </button>
         )}
-        {hash && <div>Transaction Hash: {hash}</div>}
+        {/* {hash && <div>Transaction Hash: {hash}</div>}
         {isConfirming && <div>Waiting for confirmation...</div>}
         {isConfirmed && <div>Transaction confirmed.</div>}
         {error && (
           <div>Error: {(error as BaseError).shortMessage || error.message}</div>
-        )}
+        )} */}
       </>
     </div>
   );
