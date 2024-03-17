@@ -13,27 +13,14 @@ const OPERATORS_NEEDED = 4;
 const FEE_RECIPIENT_ADDRESS = "0x3CD4958e76C317abcEA19faDd076348808424F99";
 const WITHDRAWAL_ADDRESS = "0x3CD4958e76C317abcEA19faDd076348808424F99";
 
-//var operatorsList: string[] = [
-//  "0xdBE04587196De40ADF4f6ec60F62C4065014628f",
-//  "0x31c0388c89E40ee29dE428F529da60507043fFE3",
-//  "0xae2d60e4661DB4ee71467F7c055cf4cE0ee216Ee",
-//  "0x1C9794119f76171c2be8765c24afe63A9b71b9f4",
-//];
+export default function DV() {
 
-export default function Obol() {
   const { isConnected, address } = useAccount();
-  console.log("address", address);
 
-  const [operatorsList, setOperatorsList] = useState<string[]>([
-    "0xC35CfCd67b9C27345a54EDEcC1033F2284148c81",
-    "0x33807D6F1DCe44b9C599fFE03640762A6F08C496",
-    "0xc6e76F72Ea672FAe05C357157CfC37720F0aF26f",
-    "0x86B8145c98e5BD25BA722645b15eD65f024a87EC",
-  ]);
+  const [operatorsList, setOperatorsList] = useState<string[]>([]);
   const [createClusterPopup, setCreateClusterPopup] = useState<boolean>(false);
   const [invitationLink, setInvitationLink] = useState<string>("");
-  const [invitationLinkPopup, setInvitationLinkPopup] =
-    useState<boolean>(false);
+  const [invitationLinkPopup, setInvitationLinkPopup] = useState<boolean>(false);
 
   useEffect(() => {
     if (invitationLink != "") {
